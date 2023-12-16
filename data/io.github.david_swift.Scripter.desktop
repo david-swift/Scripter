@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Scripter
+Comment=A very simple editor for very simple Python scripts
+Categories=Development;GNOME;
+
+Icon=io.github.david_swift.Scripter
+Exec=Scripter
+Terminal=false

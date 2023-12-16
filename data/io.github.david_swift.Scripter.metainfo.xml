@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.david_swift.Scripter</id>
+
+  <name>Scripter</name>
+  <summary>A very simple editor for very simple Python scripts</summary>
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>LGPL-3.0-or-later</project_license>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
+  <description>
+    <p>
+      A quick and easy way to write and run simple Python scripts.
+      It can be used as an advanced calculator or as an editor for testing simple scripts in Python.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.david_swift.Scripter.desktop</launchable>
+</component>
+

@@ -1,18 +1,23 @@
 // swift-tools-version: 5.8
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+//
+//  Package.swift
+//  Scripter
+//
 
 import PackageDescription
 
 let package = Package(
-    name: "Adwaita Template",
+    name: "Scripter",
     dependencies: [
-        .package(url: "https://github.com/AparokshaUI/Adwaita", from: "0.1.5")
+        .package(url: "https://github.com/AparokshaUI/Adwaita", from: "0.1.7"),
+        .package(url: "https://github.com/AparokshaUI/CodeEditor", from: "0.1.0")
     ],
     targets: [
         .executableTarget(
-            name: "AdwaitaTemplate",
+            name: "Scripter",
             dependencies: [
-                .product(name: "Adwaita", package: "Adwaita")
+                .product(name: "Adwaita", package: "Adwaita"),
+                .product(name: "CodeEditor", package: "CodeEditor")
             ],
             path: "Sources"
         )
