@@ -6,6 +6,8 @@
 A very simple, native GNOME app for writing and executing simple Python scripts.
 It can be used as an advanced calculator or as an editor for testing simple scripts in Python.
 
+![Screenshot](data/icons/Screenshot.png)
+
 ## Table of Contents
 
 - [Installation](#Installation)
@@ -21,10 +23,10 @@ It can be used as an advanced calculator or as an editor for testing simple scri
 
 ## Usage
 
-![GitHub Banner](data/icons/GitHubBanner.png)
-
 Write a simple Python script. Run using the `Run` button or `Ctrl+Return`.
 Print results using the `print` function so that they appear in the app's UI.
+
+Look up and copy previous outputs in the sidebar. Open it using the button in the toolbar.
 
 ## Thanks
 

@@ -8,10 +8,12 @@ import Libadwaita
 
 struct ToolbarView: View {
 
+    @Binding var sidebarVisible: Bool
     var app: GTUIApp
     var window: GTUIApplicationWindow
     var run: () -> Void
     var export: () -> Void
+    var copyOutput: () -> Void
 
     var view: Body {
         HeaderBar {
@@ -20,16 +22,27 @@ struct ToolbarView: View {
             }
             .style("suggested-action")
         } end: {
-            Menu(icon: .default(icon: .openMenu), app: app, window: window) {
-                MenuButton("Run") {
-                    run()
+            menu
+            Toggle(icon: .default(icon: .sidebarShowRight), isOn: $sidebarVisible)
+        }
+    }
+
+    @ViewBuilder var menu: Body {
+        Menu(icon: .default(icon: .openMenu), app: app, window: window) {
+            MenuButton("Run") {
+                run()
+            }
+            .keyboardShortcut("Return".ctrl())
+            windowSection
+            MenuSection {
+                MenuButton("Copy Output") {
+                    copyOutput()
                 }
-                .keyboardShortcut("Return".ctrl())
-                windowSection
-                MenuSection {
-                    MenuButton("About") {
-                        app.addWindow("about", parent: window)
-                    }
+                .keyboardShortcut("c".ctrl().shift())
+            }
+            MenuSection {
+                MenuButton("About") {
+                    app.addWindow("about", parent: window)
                 }
             }
         }

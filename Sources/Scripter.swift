@@ -34,7 +34,7 @@ struct Scripter: App {
             } onClose: {
                 exportContent = ""
             }
-            AboutWindow(id: "about", appName: "Scripter", developer: "david-swift", version: "0.1.0")
+            AboutWindow(id: "about", appName: "Scripter", developer: "david-swift", version: "0.1.1")
                 .icon(.custom(name: "io.github.david_swift.Scripter"))
                 .website(.init(string: "https://github.com/david-swift/Scripter"))
         }
