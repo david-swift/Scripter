@@ -20,20 +20,16 @@ struct ContentView: View {
     var app: GTUIApp
     var window: GTUIApplicationWindow
     var importContent: String
-    let box = Libadwaita.ListBox()
 
     var view: Body {
         OverlaySplitView(visible: sidebarVisible) {
             ScrollView {
-                box
-                    .style("navigation-sidebar")
-                    .onAppear {
-                        _ = box.handler {
-                            if let text = output[safe: box.getSelectedRow()] {
-                                selectedText = text
-                            }
-                        }
-                    }
+                List(output, selection: $selectedText) { output in
+                    Text(output)
+                        .halign(.start)
+                        .padding()
+                }
+                .style("navigation-sidebar")
             }
             .topToolbar {
                 HeaderBar.start {
@@ -75,25 +71,22 @@ struct ContentView: View {
     }
 
     func run() {
-        Task {
-            let process = Process()
-            process.executableURL = .init(fileURLWithPath: "/usr/bin/python3")
-            process.arguments = ["-c", text]
+        let process = Process()
+        process.executableURL = .init(fileURLWithPath: "/usr/bin/python3")
+        process.arguments = ["-c", text]
 
-            let pipe = Pipe()
-            process.standardOutput = pipe
-            try process.run()
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        try? process.run()
 
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            if let output = String(data: data, encoding: .utf8) {
-                let output = output.components(separatedBy: "\n").filter { !$0.isEmpty }
-                for element in output {
-                    self.output.insert(element, at: 0)
-                    _ = box.prepend(Label(element).halign(.start))
-                    box.selectRow(at: 0)
-                    if !sidebarVisible {
-                        outputSignal.signal()
-                    }
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        if let output = String(data: data, encoding: .utf8) {
+            let output = output.components(separatedBy: "\n").filter { !$0.isEmpty }
+            for element in output {
+                self.output.insert(element, at: 0)
+                selectedText = element
+                if !sidebarVisible {
+                    outputSignal.signal()
                 }
             }
         }
