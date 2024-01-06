@@ -79,6 +79,10 @@ struct ContentView: View {
 
         let pipe = Pipe()
         process.standardOutput = pipe
+
+        let errors = Pipe()
+        process.standardError = errors
+
         try? process.run()
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
@@ -91,6 +95,17 @@ struct ContentView: View {
                     outputSignal.signal()
                 }
             }
+        }
+
+        let errorData = errors.fileHandleForReading.readDataToEndOfFile()
+        if let errorOutput = String(data: errorData, encoding: .utf8), !errorOutput.isEmpty {
+            let dialog = MessageDialog(parent: window, heading: "An Error Occured", body: errorOutput)
+                .response(
+                    id: "close",
+                    label: "Close",
+                    type: .closeResponse
+                ) { }
+            dialog.show()
         }
     }
 
