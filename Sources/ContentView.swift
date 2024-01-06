@@ -10,10 +10,12 @@ import Libadwaita
 
 struct ContentView: View {
 
-    @State private var text = ""
+    @State("text")
+    private var text = ""
     @State private var output: [String] = []
     @State private var outputSignal: Signal = .init()
-    @State private var sidebarVisible = false
+    @State("sidebar")
+    private var sidebarVisible = false
     @State private var selectedText = ""
     @State private var copySignal: Signal = .init()
     @Binding var exportContent: String
