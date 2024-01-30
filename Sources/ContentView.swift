@@ -4,9 +4,9 @@
 //
 
 import Adwaita
+import CAdw
 import CodeEditor
 import Foundation
-import Libadwaita
 
 struct ContentView: View {
 
@@ -24,7 +24,7 @@ struct ContentView: View {
     var importContent: String
 
     var view: Body {
-        OverlaySplitView(visible: sidebarVisible) {
+        OverlaySplitView(visible: $sidebarVisible) {
             ScrollView {
                 List(output, selection: $selectedText) { output in
                     Text(output)
@@ -63,7 +63,7 @@ struct ContentView: View {
                     copyOutput: copyOutput
                 )
             }
-            .inspect { _ = ($0 as? Libadwaita.ToolbarView)?.topBarStyle(.raised) }
+            .inspectOnAppear { adw_toolbar_view_set_top_bar_style($0.pointer, ADW_TOOLBAR_RAISED) }
             .toast(output.first ?? "Error", signal: outputSignal)
         }
         .trailingSidebar()
@@ -99,13 +99,9 @@ struct ContentView: View {
 
         let errorData = errors.fileHandleForReading.readDataToEndOfFile()
         if let errorOutput = String(data: errorData, encoding: .utf8), !errorOutput.isEmpty {
-            let dialog = MessageDialog(parent: window, heading: "An Error Occured", body: errorOutput)
-                .response(
-                    id: "close",
-                    label: "Close",
-                    type: .closeResponse
-                ) { }
-            dialog.show()
+            let dialog = adw_message_dialog_new(window.pointer, "An Error Occured", errorOutput)
+            adw_message_dialog_add_response(dialog?.cast(), "close", "Close")
+            gtk_window_present(dialog?.cast())
         }
     }
 
@@ -114,7 +110,7 @@ struct ContentView: View {
     }
 
     func copyOutput() {
-        Clipboard.copy(selectedText)
+        State<Any>.copy(selectedText)
         copySignal.signal()
     }
 

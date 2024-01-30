@@ -4,7 +4,6 @@
 //
 
 import Adwaita
-import Libadwaita
 
 struct ToolbarView: View {
 
@@ -38,7 +37,7 @@ struct ToolbarView: View {
                 MenuButton("Copy Output") {
                     copyOutput()
                 }
-                .keyboardShortcut("c".ctrl().shift())
+                .keyboardShortcut("c".shift().ctrl())
             }
             MenuSection {
                 MenuButton("About") {
