@@ -31,5 +31,5 @@ Look up and copy previous outputs in the sidebar. Open it using the button in th
 ## Thanks
 
 ### Dependencies
-- [Adwaita](https://github.com/AparokshaUI/Adwaita) licensed under the [GPL-3.0 license](https://github.com/AparokshaUI/Adwaita/blob/main/LICENSE.md)
-- [CodeEditor](https://github.com/AparokshaUI/CodeEditor) licensed under the [GPL-3.0 license](https://github.com/AparokshaUI/CodeEditor/blob/main/LICENSE.md)
+- [Adwaita](https://github.com/AparokshaUI/Adwaita) licensed under the [MIT License](https://github.com/AparokshaUI/Adwaita/blob/main/LICENSE.md)
+- [CodeEditor](https://github.com/AparokshaUI/CodeEditor) licensed under the [MIT License](https://github.com/AparokshaUI/CodeEditor/blob/main/LICENSE.md)
