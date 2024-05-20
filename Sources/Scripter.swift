@@ -17,7 +17,6 @@ struct Scripter: App {
         Window(id: "main") { window in
             ContentView(exportContent: $exportContent, app: app, window: window, importContent: importContent)
         }
-        .defaultSize(width: 400, height: 300)
         .quitShortcut()
         .overlay {
             FileDialog(importer: "importer", extensions: ["py"]) { url in
@@ -34,10 +33,6 @@ struct Scripter: App {
             } onClose: {
                 exportContent = ""
             }
-            AboutWindow(id: "about", appName: "Scripter", developer: "david-swift", version: "0.1.1")
-                .icon(.custom(name: "io.github.david_swift.Scripter"))
-                .website(.init(string: "https://github.com/david-swift/Scripter"))
-                .issues(.init(string: "https://github.com/david-swift/Scripter/issues"))
         }
     }
 

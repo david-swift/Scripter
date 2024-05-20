@@ -8,16 +8,22 @@ import CAdw
 import CodeEditor
 import Foundation
 
-struct ContentView: View {
+struct ContentView: WindowView {
 
     @State("text")
     private var text = ""
+    @State("width")
+    private var width = 400
+    @State("height")
+    private var height = 300
     @State private var output: [String] = []
     @State private var outputSignal: Signal = .init()
     @State("sidebar")
     private var sidebarVisible = false
     @State private var selectedText = ""
     @State private var copySignal: Signal = .init()
+    @State private var alertDialog = false
+    @State private var errorOutput = ""
     @Binding var exportContent: String
     var app: GTUIApp
     var window: GTUIApplicationWindow
@@ -31,7 +37,7 @@ struct ContentView: View {
                         .halign(.start)
                         .padding()
                 }
-                .style("navigation-sidebar")
+                .sidebarStyle()
             }
             .topToolbar {
                 HeaderBar.start {
@@ -41,7 +47,7 @@ struct ContentView: View {
                 }
                 .headerBarTitle {
                     Text("History")
-                        .style("heading")
+                        .heading()
                 }
             }
             .toast("Copied \"\(selectedText)\"", signal: copySignal)
@@ -67,6 +73,8 @@ struct ContentView: View {
             .toast(output.first ?? "Error", signal: outputSignal)
         }
         .trailingSidebar()
+        .alertDialog(visible: $alertDialog, heading: "An Error Occured", body: errorOutput)
+        .response("Close") { }
         .onAppear {
             text = importContent
         }
@@ -99,9 +107,8 @@ struct ContentView: View {
 
         let errorData = errors.fileHandleForReading.readDataToEndOfFile()
         if let errorOutput = String(data: errorData, encoding: .utf8), !errorOutput.isEmpty {
-            let dialog = adw_message_dialog_new(window.pointer, "An Error Occured", errorOutput)
-            adw_message_dialog_add_response(dialog?.cast(), "close", "Close")
-            gtk_window_present(dialog?.cast())
+            self.errorOutput = errorOutput
+            alertDialog = true
         }
     }
 
@@ -112,6 +119,11 @@ struct ContentView: View {
     func copyOutput() {
         State<Any>.copy(selectedText)
         copySignal.signal()
+    }
+
+    func window(_ window: Window) -> Window {
+        window
+            .size(width: $width, height: $height)
     }
 
 }

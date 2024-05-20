@@ -8,6 +8,7 @@ import Adwaita
 struct ToolbarView: View {
 
     @Binding var sidebarVisible: Bool
+    @State private var aboutDialog = false
     var app: GTUIApp
     var window: GTUIApplicationWindow
     var run: () -> Void
@@ -41,10 +42,19 @@ struct ToolbarView: View {
             }
             MenuSection {
                 MenuButton("About") {
-                    app.addWindow("about", parent: window)
+                    aboutDialog = true
                 }
             }
         }
+        .aboutDialog(
+            visible: $aboutDialog,
+            app: "Scripter",
+            developer: "david-swift",
+            version: "0.1.2",
+            icon: .custom(name: "io.github.david_swift.Scripter"),
+            website: .init(string: "https://github.com/david-swift/Scripter"),
+            issues: .init(string: "https://github.com/david-swift/Scripter/issues")
+        )
     }
 
     @MenuBuilder var windowSection: MenuContent {
