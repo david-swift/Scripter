@@ -44,6 +44,7 @@ struct ContentView: WindowView {
                     Button(icon: .default(icon: .editCopy)) {
                         copyOutput()
                     }
+                    .tooltip("Copy Output")
                 }
                 .headerBarTitle {
                     Text("History")
@@ -73,6 +74,7 @@ struct ContentView: WindowView {
             .toast(output.first ?? "Error", signal: outputSignal)
         }
         .trailingSidebar()
+        .collapsed(width < 500)
         .alertDialog(visible: $alertDialog, heading: "An Error Occured", body: errorOutput)
         .response("Close") { }
         .onAppear {

@@ -24,6 +24,7 @@ struct ToolbarView: View {
         } end: {
             menu
             Toggle(icon: .default(icon: .sidebarShowRight), isOn: $sidebarVisible)
+                .tooltip("Toggle History")
         }
     }
 
@@ -46,6 +47,7 @@ struct ToolbarView: View {
                 }
             }
         }
+        .tooltip("Main Menu")
         .aboutDialog(
             visible: $aboutDialog,
             app: "Scripter",
